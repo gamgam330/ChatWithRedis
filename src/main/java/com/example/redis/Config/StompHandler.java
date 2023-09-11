@@ -1,8 +1,9 @@
 package com.example.redis.Config;
 
-import com.example.redis.Service.JwtTokenProvider;
+import com.example.redis.Service.Util;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.simp.stomp.StompCommand;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class StompHandler implements ChannelInterceptor {
 
-    private final JwtTokenProvider jwtTokenProvider;
+    @Value("${jwt.secret}")
+    private String secretKey;
+    private final Util util;
 
     // websocket을 통해 들어온 요청이 처리 되기전 실행된다.
     @Override
@@ -23,7 +26,7 @@ public class StompHandler implements ChannelInterceptor {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
         // websocket 연결시 헤더의 jwt token 검증
         if (StompCommand.CONNECT == accessor.getCommand()) {
-            jwtTokenProvider.validateToken(accessor.getFirstNativeHeader("token"));
+            util.isExpired(accessor.getFirstNativeHeader("token"), secretKey);
         }
         return message;
     }

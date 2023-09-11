@@ -1,12 +1,10 @@
 package com.example.redis.Controller;
 
 import com.example.redis.DTO.ChatRoom;
-import com.example.redis.DTO.LoginInfo;
 import com.example.redis.Repository.ChatRoomRepository;
-import com.example.redis.Service.JwtTokenProvider;
+import com.example.redis.Service.Util;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +18,12 @@ import java.util.List;
 @RequestMapping("/chat")
 public class ChatRoomController {
 
+    @Value("${jwt.secret}")
+    private String secretKey;
     private final ChatRoomRepository chatRoomRepository;
 
-    private final JwtTokenProvider jwtTokenProvider;
+
+    private final Util util;
 
     @GetMapping("/room")
     public String rooms() {
@@ -51,13 +52,5 @@ public class ChatRoomController {
     @ResponseBody
     public ChatRoom roomInfo(@PathVariable String roomId) {
         return chatRoomRepository.findRoomById(roomId);
-    }
-
-    @GetMapping("/user")
-    @ResponseBody
-    public LoginInfo getUserInfo() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        return LoginInfo.builder().name(name).token(jwtTokenProvider.generateToken(name)).build();
     }
 }

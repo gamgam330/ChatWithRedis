@@ -1,8 +1,12 @@
-package com.example.redis.Service;
+/*package com.example.redis.Service;
 
 import io.jsonwebtoken.*;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -16,9 +20,9 @@ public class JwtTokenProvider {
 
     private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
 
-    /**
-     * 이름으로 Jwt Token을 생성한다.
-     */
+
+     //이름으로 Jwt Token을 생성한다.
+
     public String generateToken(String name) {
         Date now = new Date();
         return Jwts.builder()
@@ -29,18 +33,28 @@ public class JwtTokenProvider {
                 .compact();
     }
 
-    /**
-     * Jwt Token을 복호화 하여 이름을 얻는다.
-     */
+
+    // JWT 토큰에서 인증 정보 조회
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+//이름으로 Jwt Token을 생성한다.
+
     public String getUserNameFromJwt(String jwt) {
         return getClaims(jwt).getBody().getId();
     }
 
-    /**
-     * Jwt Token의 유효성을 체크한다.
-     */
+ //이름으로 Jwt Token을 생성한다.
+
     public boolean validateToken(String jwt) {
         return this.getClaims(jwt) != null;
+    }
+
+    // Request의 Header에서 token 값을 가져옵니다. "Authorization" : "TOKEN값'
+    public String resolveToken(HttpServletRequest request) {
+        return request.getHeader("Authorization");
     }
 
     private Jws<Claims> getClaims(String jwt) {
@@ -64,3 +78,4 @@ public class JwtTokenProvider {
         }
     }
 }
+*/

@@ -1,4 +1,4 @@
-package com.example.redis.DTO;
+/*package com.example.redis.DTO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -13,4 +13,4 @@ public class LoginInfo {
         this.name = name;
         this.token = token;
     }
-}
+}*/
