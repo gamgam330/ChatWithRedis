@@ -1,4 +1,4 @@
-package com.example.redis.Redis;
+/*package com.example.redis.Redis;
 
 import com.example.redis.DTO.ChatMessage;
 import lombok.RequiredArgsConstructor;
@@ -15,4 +15,4 @@ public class RedisPublisher {
     public void publish(ChannelTopic topic, ChatMessage message) {
         redisTemplate.convertAndSend(topic.getTopic(), message);
     }
-}
+}*/
