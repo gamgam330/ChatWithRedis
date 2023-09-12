@@ -12,12 +12,10 @@ import lombok.NoArgsConstructor;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userid_generator")
-    @SequenceGenerator(name = "userid_generator", sequenceName = "userid_seq", initialValue = 315)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "userid_generator")
     @Column(name = "userid")
     // IDENTITY: 데이터베이스의 자동 증가 기능을 사용하여 기본 키 값을 생성하는 방식
     // SEQUENCE: 데이터베이스의 시퀀스를 사용하여 기본 키 값을 생성하는 방식
-    // 315번 이유: 1 ~ 314까지는 임의의 유저가 있다고 가정 (협업 필터링 데이터 때문)
     private long userid;
 
     @Column(length = 45, nullable = false)
@@ -59,8 +57,7 @@ public class User {
         this.email = email;
     }
 
-    public User (long userid, String id, String pw, String nickname, String name, String email) {
-        this.userid = userid;
+    public User (String id, String pw, String nickname, String name, String email) {
         this.id = id;
         this.pw = pw;
         this.nickname = nickname;

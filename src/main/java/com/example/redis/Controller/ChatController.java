@@ -27,6 +27,8 @@ public class ChatController {
     /**
      * websocket "/pub/chat/message"로 들어오는 메시징을 처리한다.
      */
+
+    //이게 채팅방마다 존재하는 TOPIC값 구독하는 부분
     @MessageMapping("/chat/message")
     public void message(ChatMessage message, @Header("token") String token) {
         //String nickname = jwtTokenProvider.getUserNameFromJwt(token);
@@ -40,5 +42,7 @@ public class ChatController {
         }
         // Websocket에 발행된 메시지를 redis로 발행(publish)
         redisTemplate.convertAndSend(channelTopic.getTopic(), message);
-    }
+    }//내가 생각하기에는 한명이 채팅걸면 그사람도 채팅방이 열려야함. 그니까 현재 로그인된 회원의 토큰값에서 닉네임 해독해서 토픽 구독하고, 다른한명은 어떻게 해야할까? 그사람 토큰값이 있는게 아닌데....
+    //Token은 닉네임값으로 만들었기때문에 준형이랑 연결하면서 Token부분도 다 수정해야함.
+    //DB에 저장된 개개인의 토큰값을 가쟈와 둘다 토픽을 구독해야할듯?
 }

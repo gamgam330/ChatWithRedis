@@ -38,8 +38,8 @@ public class ChatRoomRepository {
 
     // 채팅방 생성 : 서버간 채팅방 공유를 위해 redis hash에 저장한다.
     public ChatRoom createChatRoom(String name) {
-        ChatRoom chatRoom = ChatRoom.create(name);
-        opsHashChatRoom.put(CHAT_ROOMS, chatRoom.getRoomId(), chatRoom);
+        ChatRoom chatRoom = ChatRoom.create(name);                          //FrontEnd에 반환해줄 문자열 배열
+        opsHashChatRoom.put(CHAT_ROOMS, chatRoom.getRoomId(), chatRoom);    //BackEnd에서 쓸 Room 정보들
         return chatRoom;
     }
 }

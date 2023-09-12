@@ -50,7 +50,7 @@ public class LoginController {
         HttpServletResponse response = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
         response.addCookie(cookie);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body("로그인 성공!");
     }
 
     @PostMapping("loginTest")

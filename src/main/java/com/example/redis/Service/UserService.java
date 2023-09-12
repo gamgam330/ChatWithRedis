@@ -6,6 +6,7 @@ import com.example.redis.Repository.UserRepository;
 import com.example.redis.domain.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -38,6 +39,7 @@ public class UserService {
         return Util.createJwt(nickname, secretKey);
     }
 
+    @Transactional
     public String join(UserForm form) {
 
         // 1. Id가 중복인지?
@@ -60,7 +62,7 @@ public class UserService {
 
         // 4. 그게 다 아니면 저장
         User user = form.toEntity();        // Dto를 Entity 변환
-        User saved = userRepository.save(user); // Repository에게 Entity를 DB로 저장하게 함
+        userRepository.save(user); // Repository에게 Entity를 DB로 저장하게 함
 
         return "SUCCESS";
     }
