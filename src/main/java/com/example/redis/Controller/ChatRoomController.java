@@ -25,6 +25,8 @@ public class ChatRoomController {
 
     private final Util util;
 
+
+
     @GetMapping("/room")
     public String rooms() {
         return "/chat/room";
@@ -33,7 +35,9 @@ public class ChatRoomController {
     @GetMapping("/rooms")
     @ResponseBody
     public List<ChatRoom> room() {
-        return chatRoomRepository.findAllRoom();
+        List<ChatRoom> chatRooms = chatRoomRepository.findAllRoom();
+        chatRooms.stream().forEach(room -> room.setUserCount(chatRoomRepository.getUserCount(room.getRoomId())));
+        return chatRooms;
     }
 
     @PostMapping("/room")

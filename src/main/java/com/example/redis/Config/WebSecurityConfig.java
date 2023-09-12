@@ -38,6 +38,7 @@ public class WebSecurityConfig {
                 .requestMatchers("/user/login").permitAll()
                 .requestMatchers("/search/recommand").permitAll()
                 .requestMatchers("/search/updateData").permitAll()
+                .requestMatchers("/chat/room").permitAll()
                 // --------------------------------------------
                 .anyRequest().authenticated() // 나머지 API에 대해서는 인증을 요구
                 .and()
